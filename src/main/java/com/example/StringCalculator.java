@@ -28,7 +28,7 @@ public class StringCalculator {
 
                     if (Integer.parseInt(stringArrayMember) < 0)
                         negativeNumberList.add(stringArrayMember);
-                    else
+                    else if (Integer.parseInt(stringArrayMember) < 1001)
                         results += Integer.parseInt(stringArrayMember);
                 }
             }

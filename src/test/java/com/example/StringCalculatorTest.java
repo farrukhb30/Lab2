@@ -108,4 +108,20 @@ public class StringCalculatorTest {
         Assertions.assertEquals(expected, runtimeException.getMessage());
     }
 
+    @Test
+    void addTestIgnoringBiggerNumbers() {
+
+        RuntimeException runtimeException = null;
+        String numbers = "2,1001,65,7,3,4000,9,45,2100";
+        int expected = 131;
+        int actual = 0;
+        try {
+            StringCalculator stringCalculator = new StringCalculator();
+            actual = stringCalculator.add(numbers);
+        } catch (RuntimeException exception) {
+            runtimeException = exception;
+        }
+        Assertions.assertEquals(expected, actual);
+    }
+
 }
