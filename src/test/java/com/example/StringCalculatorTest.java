@@ -66,4 +66,28 @@ public class StringCalculatorTest {
         Assertions.assertEquals(expected, actual);
     }
 
+    @Test
+    void addTestWithDiffSeparatorBetweenNumbersAndDelimiter() {
+        String numbers = "//;"+'\n'+"1;2";
+        int expected = 3;
+        int actual = 0;
+
+        StringCalculator stringCalculator = new StringCalculator();
+        actual = stringCalculator.add(numbers);
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void addTestWithDiffSeparatorBetweenNumbersAndDelimiterChange() {
+        String numbers = "//&"+'\n'+"1&2&9&7";
+        int expected = 19;
+        int actual = 0;
+
+        StringCalculator stringCalculator = new StringCalculator();
+        actual = stringCalculator.add(numbers);
+
+        Assertions.assertEquals(expected, actual);
+    }
+
 }
