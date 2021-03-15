@@ -7,15 +7,17 @@ public class StringCalculator {
         String[] stringArray = numbers.split(",");
         int results = 0;
 
-        if ((stringArray.length == 1) && !(numbers.isBlank())) {
+        if ((stringArray.length > 0) && !(numbers.isBlank())) {
 
-            results = Integer.parseInt(stringArray[0]);
-            return results;
-        } else if ((stringArray.length > 0 && stringArray.length < 3) && !(numbers.isBlank())) {
+            for (String stringArrayMember : stringArray) {
 
-            results = Integer.parseInt(stringArray[0]) + Integer.parseInt(stringArray[1]);
+                results = results + Integer.parseInt(stringArrayMember);
+            }
+
             return results;
+
         } else {
+
             return 0;
         }
     }

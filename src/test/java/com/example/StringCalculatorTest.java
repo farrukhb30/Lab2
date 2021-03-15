@@ -41,4 +41,16 @@ public class StringCalculatorTest {
         Assertions.assertEquals(expected, actual);
     }
 
+    @Test
+    void addTestWithMultipleNumbers() {
+        String numbers = "5,55,10,20";
+        int expected = 90;
+        int actual = 0;
+
+        StringCalculator stringCalculator = new StringCalculator();
+        actual = stringCalculator.add(numbers);
+
+        Assertions.assertEquals(expected, actual);
+    }
+
 }
