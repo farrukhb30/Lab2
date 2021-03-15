@@ -55,7 +55,7 @@ public class StringCalculatorTest {
 
     @Test
     void addTestWithDiffSeparatorBetweenNumbers() {
-        String numbers = "1"+'\n'+"2,3";
+        String numbers = "1" + '\n' + "2,3";
 
         int expected = 6;
         int actual = 0;
@@ -68,7 +68,7 @@ public class StringCalculatorTest {
 
     @Test
     void addTestWithDiffSeparatorBetweenNumbersAndDelimiter() {
-        String numbers = "//;"+'\n'+"1;2";
+        String numbers = "//;" + '\n' + "1;2";
         int expected = 3;
         int actual = 0;
 
@@ -80,7 +80,7 @@ public class StringCalculatorTest {
 
     @Test
     void addTestWithDiffSeparatorBetweenNumbersAndDelimiterChange() {
-        String numbers = "//&"+'\n'+"1&2&9&7";
+        String numbers = "//&" + '\n' + "1&2&9&7";
         int expected = 19;
         int actual = 0;
 
@@ -88,6 +88,24 @@ public class StringCalculatorTest {
         actual = stringCalculator.add(numbers);
 
         Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void addTestWithExceptionForNegativeNumbers() {
+
+        RuntimeException runtimeException = null;
+        String numbers = "2,5,-8,3,-7,3,-12,15";
+        String expected = "negatives not allowed:[-8, -7, -12]";
+        int actual = 0;
+        try {
+            StringCalculator stringCalculator = new StringCalculator();
+            actual = stringCalculator.add(numbers);
+        } catch (RuntimeException exception) {
+            runtimeException = exception;
+        }
+
+        Assertions.assertNotNull(runtimeException);
+        Assertions.assertEquals(expected, runtimeException.getMessage());
     }
 
 }

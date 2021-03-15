@@ -1,11 +1,14 @@
 package com.example;
 
+import java.util.ArrayList;
+
 public class StringCalculator {
 
-    int add(String numbers) {
+    int add(String numbers) throws RuntimeException {
 
         String newDelimiter = " ";
         int results = 0;
+        ArrayList<String> negativeNumberList = new ArrayList();
 
         if (numbers.startsWith("//")) {
             int delimiterIndex = numbers.indexOf("//") + 2;
@@ -21,11 +24,18 @@ public class StringCalculator {
         if ((stringArray.length > 0) && !(numbers.isBlank())) {
 
             for (String stringArrayMember : stringArray) {
-                if(!stringArrayMember.isBlank())
-                results += Integer.parseInt(stringArrayMember);
+                if (!stringArrayMember.isBlank()) {
 
+                    if (Integer.parseInt(stringArrayMember) < 0)
+                        negativeNumberList.add(stringArrayMember);
+                    else
+                        results += Integer.parseInt(stringArrayMember);
+                }
             }
         }
+
+        if (!negativeNumberList.isEmpty())
+            throw new RuntimeException("negatives not allowed:" + negativeNumberList);
         return results;
     }
 
