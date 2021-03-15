@@ -53,4 +53,17 @@ public class StringCalculatorTest {
         Assertions.assertEquals(expected, actual);
     }
 
+    @Test
+    void addTestWithDiffSeparatorBetweenNumbers() {
+        String numbers = "1"+'\n'+"2,3";
+
+        int expected = 6;
+        int actual = 0;
+
+        StringCalculator stringCalculator = new StringCalculator();
+        actual = stringCalculator.add(numbers);
+
+        Assertions.assertEquals(expected, actual);
+    }
+
 }
