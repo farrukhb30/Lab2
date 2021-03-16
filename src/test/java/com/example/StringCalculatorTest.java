@@ -98,7 +98,7 @@ public class StringCalculatorTest {
     }
 
     @Test
-    @DisplayName("Testing method for negative numbers and should generate exception with numbers")
+    @DisplayName("Negative numbers and should generate exception with numbers")
     void addTestExceptionForNegatives() {
 
         RuntimeException runtimeException = null;
@@ -117,7 +117,7 @@ public class StringCalculatorTest {
     }
 
     @Test
-    @DisplayName("Testing method for ignoring bigger than 1000 numbers")
+    @DisplayName("Ignoring bigger than 1000 numbers")
     void addTestForBigNumbers() {
 
         RuntimeException runtimeException = null;
@@ -136,11 +136,28 @@ public class StringCalculatorTest {
     }
 
     @Test
-    @DisplayName("Testing method for pattern using more than one character delimiter")
+    @DisplayName("Pattern using more than one character delimiter")
     void addTestMultiCharactersDelimiters() {
 
         RuntimeException runtimeException = null;
         String numbers = "//[***]" + '\n' + "1***2***3";
+        int expected = 6;
+        int actual = 0;
+        try {
+            StringCalculator stringCalculator = new StringCalculator();
+            actual = stringCalculator.add(numbers);
+        } catch (RuntimeException exception) {
+            runtimeException = exception;
+        }
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("Pattern using more than one character with multiple single character delimiters")
+    void addTestMultiCharactersAndMultiDelimiters() {
+
+        RuntimeException runtimeException = null;
+        String numbers = "//[*][%]" + '\n' + "1*2%3";
         int expected = 6;
         int actual = 0;
         try {

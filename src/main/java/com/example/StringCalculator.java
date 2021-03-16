@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class StringCalculator {
 
-
     private String numbers;
 
     int add(@org.jetbrains.annotations.NotNull String numbers) throws RuntimeException {
@@ -12,20 +11,23 @@ public class StringCalculator {
 
         ArrayList<String> allDelimiters = new ArrayList<>();
         allDelimiters.add(";");
-
+        int delimiterIndex = 0;
         int results = 0;
+
         ArrayList<String> negativeNumberList = new ArrayList();
-        String numbersAlterd = "";
 
         if (numbers.startsWith("//")) {
 
-            int delimiterIndex = numbers.indexOf("//") + 2;
+            delimiterIndex = numbers.indexOf("//") + 2;
 
             if ((numbers.indexOf('[') == delimiterIndex)) {//looking for the delimiter which should starts with '['.
 
                 allDelimiters.add(numbers.substring(numbers.indexOf('[') + 1, numbers.indexOf(']')));
-                numbers = numbers.substring(numbers.indexOf(']') + 1);//delete rest of string after ']'.
-
+                numbers = numbers.substring(numbers.indexOf(']') + 1);//delete string before ']'.
+                    if(numbers.contains("[")){
+                        allDelimiters.add(numbers.substring(numbers.indexOf('[') + 1, numbers.indexOf(']')));
+                        numbers = numbers.substring(numbers.indexOf(']') + 1);//delete string before ']'
+                    }
             } else if (!(numbers.indexOf('[') == delimiterIndex)) {
 
                 allDelimiters.add(numbers.substring(delimiterIndex, delimiterIndex + 1));
@@ -35,12 +37,12 @@ public class StringCalculator {
         numbers = numbers.substring(numbers.indexOf("n") + 1);
 
         for (String allDelimiter : allDelimiters) { //For loop to replace all the delimiters gathered with ',' .
-            numbersAlterd = numbers.replace(allDelimiter.trim(), ",");
+            numbers = numbers.replace(allDelimiter.trim(), ",");
         }
 
-        String[] stringArray = numbersAlterd.split("[;?\\n|,]+");
+        String[] stringArray = numbers.split("[;?\\n|,]+");
 
-        if ((stringArray.length > 0) && !(numbersAlterd.isBlank())) {
+        if ((stringArray.length > 0) && !(numbers.isBlank())) {
             for (String stringArrayMember : stringArray) {
                 if (!stringArrayMember.isBlank()) {
                     if (Integer.parseInt(stringArrayMember.trim()) < 0)
