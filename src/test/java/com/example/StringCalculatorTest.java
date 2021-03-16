@@ -124,4 +124,19 @@ public class StringCalculatorTest {
         Assertions.assertEquals(expected, actual);
     }
 
+    @Test
+    void addTestIgnoringBiggerNumbersPlusNegativeNumbersAndDelimiters() {
+
+        RuntimeException runtimeException = null;
+        String numbers = "//[***]" + '\n' + "1***2***3";
+        int expected = 6;
+        int actual = 0;
+        try {
+            StringCalculator stringCalculator = new StringCalculator();
+            actual = stringCalculator.add(numbers);
+        } catch (RuntimeException exception) {
+            runtimeException = exception;
+        }
+        Assertions.assertEquals(expected, actual);
+    }
 }
