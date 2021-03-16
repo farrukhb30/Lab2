@@ -153,12 +153,29 @@ public class StringCalculatorTest {
     }
 
     @Test
-    @DisplayName("Pattern using more than one character with multiple single character delimiters")
-    void addTestMultiCharactersAndMultiDelimiters() {
+    @DisplayName("Pattern using one character multiple delimiters")
+    void addTestSingleCharacterAndMultiDelimiters() {
 
         RuntimeException runtimeException = null;
         String numbers = "//[*][%]" + '\n' + "1*2%3";
         int expected = 6;
+        int actual = 0;
+        try {
+            StringCalculator stringCalculator = new StringCalculator();
+            actual = stringCalculator.add(numbers);
+        } catch (RuntimeException exception) {
+            runtimeException = exception;
+        }
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("Pattern using multiple characters and multiple delimiters")
+    void addTestMultiCharactersAndMultiDelimiters() {
+
+        RuntimeException runtimeException = null;
+        String numbers = "//[***][%%%%%]" + '\n' + "1%%%%%2***3%%%%%7";
+        int expected = 13;
         int actual = 0;
         try {
             StringCalculator stringCalculator = new StringCalculator();

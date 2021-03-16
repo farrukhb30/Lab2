@@ -1,5 +1,7 @@
 package com.example;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class StringCalculator {
@@ -15,31 +17,21 @@ public class StringCalculator {
         int results = 0;
 
         ArrayList<String> negativeNumberList = new ArrayList();
-
-        if (numbers.startsWith("//")) {
-
-            delimiterIndex = numbers.indexOf("//") + 2;
-
-            if ((numbers.indexOf('[') == delimiterIndex)) {//looking for the delimiter which should starts with '['.
-
-                allDelimiters.add(numbers.substring(numbers.indexOf('[') + 1, numbers.indexOf(']')));
-                numbers = numbers.substring(numbers.indexOf(']') + 1);//delete string before ']'.
-                    if(numbers.contains("[")){
-                        allDelimiters.add(numbers.substring(numbers.indexOf('[') + 1, numbers.indexOf(']')));
-                        numbers = numbers.substring(numbers.indexOf(']') + 1);//delete string before ']'
-                    }
-            } else if (!(numbers.indexOf('[') == delimiterIndex)) {
-
-                allDelimiters.add(numbers.substring(delimiterIndex, delimiterIndex + 1));
-                numbers = numbers.substring(3);//deletes the string after 3rd position.
-            }
+        do{
+            numbers = stringNumbersFormatter(numbers, allDelimiters);
         }
-        numbers = numbers.substring(numbers.indexOf("n") + 1);
+        while(numbers.contains("["));
+
 
         for (String allDelimiter : allDelimiters) { //For loop to replace all the delimiters gathered with ',' .
             numbers = numbers.replace(allDelimiter.trim(), ",");
         }
 
+        return stringNumbersParser(numbers, negativeNumberList);
+    }
+
+    private int stringNumbersParser(@NotNull String numbers, ArrayList<String> negativeNumberList) {
+        int results = 0;
         String[] stringArray = numbers.split("[;?\\n|,]+");
 
         if ((stringArray.length > 0) && !(numbers.isBlank())) {
@@ -56,6 +48,33 @@ public class StringCalculator {
         if (!negativeNumberList.isEmpty())
             throw new RuntimeException("negatives not allowed:" + negativeNumberList);
         return results;
+    }
+
+    @NotNull
+    private String stringNumbersFormatter(@NotNull String numbers, ArrayList<String> allDelimiters) {
+        int delimiterIndex;
+        if (numbers.startsWith("//")) {
+
+            delimiterIndex = numbers.indexOf("//") + 2;
+
+            if ((numbers.indexOf('[') == delimiterIndex)) {//looking for the delimiter which should starts with '['.
+
+                allDelimiters.add(numbers.substring(numbers.indexOf('[') + 1, numbers.indexOf(']')));
+                numbers = numbers.substring(numbers.indexOf(']') + 1);//delete string before ']'.
+
+                    if(numbers.contains("[")){
+                        allDelimiters.add(numbers.substring(numbers.indexOf('[') + 1, numbers.indexOf(']')));
+                        numbers = numbers.substring(numbers.indexOf(']') + 1);//delete string before ']'
+                    }
+
+            } else if (!(numbers.indexOf('[') == delimiterIndex)) {
+
+                allDelimiters.add(numbers.substring(delimiterIndex, delimiterIndex + 1));
+                numbers = numbers.substring(3);//deletes the string after 3rd position.
+            }
+        }
+        numbers = numbers.substring(numbers.indexOf("n") + 1);// retaining the numbers string after \n.
+        return numbers;
     }
 
 }
