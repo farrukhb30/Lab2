@@ -4,13 +4,15 @@ import java.util.ArrayList;
 
 public class StringCalculator {
 
-    int add(String numbers) throws RuntimeException {
+
+    private String numbers;
+
+    int add(@org.jetbrains.annotations.NotNull String numbers) throws RuntimeException {
+        this.numbers = numbers;
 
         ArrayList<String> allDelimiters = new ArrayList<>();
-        allDelimiters.add(",");
         allDelimiters.add(";");
 
-        String newDelimiter = " ";
         int results = 0;
         ArrayList<String> negativeNumberList = new ArrayList();
         String numbersAlterd = "";
@@ -36,7 +38,7 @@ public class StringCalculator {
             numbersAlterd = numbers.replace(allDelimiter.trim(), ",");
         }
 
-        String[] stringArray = numbersAlterd.split(",?\\n|,");
+        String[] stringArray = numbersAlterd.split("[;?\\n|,]+");
 
         if ((stringArray.length > 0) && !(numbersAlterd.isBlank())) {
             for (String stringArrayMember : stringArray) {
@@ -44,7 +46,7 @@ public class StringCalculator {
                     if (Integer.parseInt(stringArrayMember.trim()) < 0)
                         negativeNumberList.add(stringArrayMember.trim());
                     else if (Integer.parseInt(stringArrayMember.trim()) < 1001)
-                        results += Integer.parseInt(stringArrayMember.trim());
+                        results += Integer.parseInt(stringArrayMember.trim());// trimming the string for unnecessary values!
                 }
             }
         }
