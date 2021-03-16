@@ -17,10 +17,7 @@ public class StringCalculator {
         int results = 0;
 
         ArrayList<String> negativeNumberList = new ArrayList();
-        do{
-            numbers = stringNumbersFormatter(numbers, allDelimiters);
-        }
-        while(numbers.contains("["));
+        numbers = stringNumbersFormatter(numbers, allDelimiters);
 
 
         for (String allDelimiter : allDelimiters) { //For loop to replace all the delimiters gathered with ',' .
@@ -58,14 +55,10 @@ public class StringCalculator {
             delimiterIndex = numbers.indexOf("//") + 2;
 
             if ((numbers.indexOf('[') == delimiterIndex)) {//looking for the delimiter which should starts with '['.
-
-                allDelimiters.add(numbers.substring(numbers.indexOf('[') + 1, numbers.indexOf(']')));
-                numbers = numbers.substring(numbers.indexOf(']') + 1);//delete string before ']'.
-
-                    if(numbers.contains("[")){
-                        allDelimiters.add(numbers.substring(numbers.indexOf('[') + 1, numbers.indexOf(']')));
-                        numbers = numbers.substring(numbers.indexOf(']') + 1);//delete string before ']'
-                    }
+                do {
+                    allDelimiters.add(numbers.substring(numbers.indexOf('[') + 1, numbers.indexOf(']')));
+                    numbers = numbers.substring(numbers.indexOf(']') + 1);//delete string before ']'.
+                } while (numbers.contains("["));
 
             } else if (!(numbers.indexOf('[') == delimiterIndex)) {
 

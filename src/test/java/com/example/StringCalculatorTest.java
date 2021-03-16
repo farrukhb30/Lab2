@@ -185,4 +185,21 @@ public class StringCalculatorTest {
         }
         Assertions.assertEquals(expected, actual);
     }
+
+    @Test
+    @DisplayName("Pattern using multiple characters and multiple delimiters of varying lengths")
+    void addTestMultiCharactersAndMultiDelimitersLongerLengths() {
+
+        RuntimeException runtimeException = null;
+        String numbers = "//[***][%%%%%][&&&&&&&&&&&]" + '\n' + "1%%%%%2***3%%%%%7&&&&&&&&&&&4***5";
+        int expected = 22;
+        int actual = 0;
+        try {
+            StringCalculator stringCalculator = new StringCalculator();
+            actual = stringCalculator.add(numbers);
+        } catch (RuntimeException exception) {
+            runtimeException = exception;
+        }
+        Assertions.assertEquals(expected, actual);
+    }
 }
