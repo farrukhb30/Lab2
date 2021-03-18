@@ -3,6 +3,8 @@ package com.example;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class StringCalculator {
 
@@ -12,18 +14,24 @@ public class StringCalculator {
         this.numbers = numbers;
 
         ArrayList<String> allDelimiters = new ArrayList<>();
+        ArrayList<String> negativeNumberList = new ArrayList();
         allDelimiters.add(";");
         int delimiterIndex = 0;
         int results = 0;
 
-        ArrayList<String> negativeNumberList = new ArrayList();
         numbers = stringNumbersFormatter(numbers, allDelimiters);
 
+        Comparator<String> stringLengthComparator = new Comparator<String>() {
+            @Override
+            public int compare(String string1, String string2) {
+                return Integer.compare(string2.length(), string1.length());
+            }//sorting all delimiters based on their length meaning '***' comes first and '**' comes later in the list.
+        };
+        Collections.sort(allDelimiters, stringLengthComparator);
 
         for (String allDelimiter : allDelimiters) { //For loop to replace all the delimiters gathered with ',' .
             numbers = numbers.replace(allDelimiter.trim(), ",");
         }
-
         return stringNumbersParser(numbers, negativeNumberList);
     }
 
