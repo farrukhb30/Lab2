@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -80,5 +79,14 @@ class EmployeeManagerTest {
         employee.setPaid(true);
 
         assertTrue(employee.isPaid());
+    }
+
+    @Test
+    @DisplayName("Test function for toString()")
+    void toStringTest(){
+        Employee employee = new Employee("Mgr001", 4500.0);
+        String expected = "Employee [id=Mgr001, salary=4500.0]";
+
+        assertEquals(expected, employee.toString());
     }
 }
