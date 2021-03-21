@@ -12,6 +12,6 @@ public class TestEmployeeRepository implements EmployeeRepository {
 
     @Override
     public Employee save(Employee employee) {
-        return null;
+        return employee;
     }
 }
