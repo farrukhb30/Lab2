@@ -55,7 +55,6 @@ class EmployeeManagerTest {
     @DisplayName("Test function for Id setters and getters")
     void employeeIdTest(){
         Employee employee = new Employee("Mgr001", 4500.0);
-        String actual = "";
         employee.setId("Mgr002");
 
         assertThat(employee.getId()).isEqualTo("Mgr002");
@@ -67,7 +66,6 @@ class EmployeeManagerTest {
     @DisplayName("Test function for Salary setters and getters")
     void employeeSalaryTest(){
         Employee employee = new Employee("Mgr001", 4500.0);
-        String actual = "";
         employee.setSalary(5500.0);
 
         assertThat(employee.getSalary()).isEqualTo(5500.0);
@@ -75,4 +73,12 @@ class EmployeeManagerTest {
 
     }
 
+    @Test
+    @DisplayName("Test function for boolean paid")
+    void employeePaidTest(){
+        Employee employee = new Employee("Mgr001", 4500.0);
+        employee.setPaid(true);
+
+        assertTrue(employee.isPaid());
+    }
 }
