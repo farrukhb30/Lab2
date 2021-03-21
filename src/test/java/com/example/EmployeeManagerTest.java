@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -48,6 +49,18 @@ class EmployeeManagerTest {
         Employee actual = employeeFilter.saveEmployee(employee);
 
         assertTrue(actual.getId().equals(new Employee("Exec-001", 8000.0).getId()));
+    }
+
+    @Test
+    @DisplayName("Test function for Id setters and getters")
+    void employeeIdTest(){
+        Employee employee = new Employee("Mgr001", 4500.0);
+        String actual = "";
+        employee.setId("Mgr002");
+
+        assertThat(employee.getId()).isEqualTo("Mgr002");
+        assertFalse(employee.getId().equals("Mgr001"));
+
     }
 
 }
