@@ -63,4 +63,16 @@ class EmployeeManagerTest {
 
     }
 
+    @Test
+    @DisplayName("Test function for Salary setters and getters")
+    void employeeSalaryTest(){
+        Employee employee = new Employee("Mgr001", 4500.0);
+        String actual = "";
+        employee.setSalary(5500.0);
+
+        assertThat(employee.getSalary()).isEqualTo(5500.0);
+        assertFalse(employee.getSalary() == 4500.0);
+
+    }
+
 }
