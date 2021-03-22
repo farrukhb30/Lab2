@@ -89,4 +89,27 @@ class EmployeeManagerTest {
 
         assertEquals(expected, employee.toString());
     }
+
+    @Test
+    @DisplayName("Changing status of employee being paid after payEmployee()")
+    void convert() {
+
+        EmployeeRepository employeeRepository = mock(EmployeeRepository.class);
+        when(employeeRepository.findAll()).thenReturn(List.of(new Employee("Exec000", 2500.0),
+                new Employee("Exec001", 3500.0),
+                new Employee("Exec004", 6500.0),
+                new Employee("Exec002", 4500.0),
+                new Employee("Exec003", 5500.0),
+                new Employee("Exec006", 7500.0)
+        ));
+
+        EmployeeFilter employeeFilter = new EmployeeFilter(employeeRepository);
+        BankService bankService = new TestBankService();
+        EmployeeManager employeeManager = new EmployeeManager(employeeRepository, bankService);
+
+        int expectedResult = employeeManager.payEmployees();
+        assertEquals(expectedResult, 5);
+
+    }
+
 }
