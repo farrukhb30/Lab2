@@ -3,6 +3,7 @@ package com.example;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -38,6 +39,10 @@ public class StringCalculator {
     private int stringNumbersParser(@NotNull String numbers, ArrayList<String> negativeNumberList) {
         int results = 0;
         String[] stringArray = numbers.split("[;?\\n|,]+");
+
+        var abc = Arrays.stream(stringArray)
+                .mapToInt(t -> Integer.parseInt(t.substring(0,1)));
+        
 
         if ((stringArray.length > 0) && !(numbers.isBlank())) {
             for (String stringArrayMember : stringArray) {
