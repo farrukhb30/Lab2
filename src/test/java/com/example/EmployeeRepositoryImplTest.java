@@ -41,7 +41,7 @@ class EmployeeRepositoryImplTest {
     }
 
     @Test
-    @DisplayName("Test for save method which overwrites the ArrayList entry")
+    @DisplayName("Test for save method which adds the ArrayList entry")
     void saveEmployee()  {
         EmployeeRepositoryImpl employeeRepositoryImpl = new EmployeeRepositoryImpl();
 
@@ -54,6 +54,24 @@ class EmployeeRepositoryImplTest {
                 .collect(Collectors.toList());
 
         assertThat(idList).containsExactly(new Employee("John123", 500.0).getId().toString());
+
+    }
+
+    @Test
+    @DisplayName("Test for save method which overwrites the ArrayList entry")
+    void updateEmployee()  {
+        EmployeeRepositoryImpl employeeRepositoryImpl = new EmployeeRepositoryImpl();
+
+        var  employee = employeeRepositoryImpl.save(new Employee("John123", 500.0));
+        var  employeeUpdated = employeeRepositoryImpl.save(new Employee("John123", 1000.0));
+
+        var employeeList = employeeRepositoryImpl.findAll();
+        var salaryList = employeeList.stream()
+                .filter(eID -> eID.getId().equals("John123"))
+                .map(employeeSalary -> employeeSalary.getSalary())
+                .collect(Collectors.toList());
+
+        assertThat(salaryList).containsExactly(new Employee("John123", 1000.0).getSalary());
 
     }
 }
