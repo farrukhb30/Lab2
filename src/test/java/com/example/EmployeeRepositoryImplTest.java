@@ -1,5 +1,6 @@
 package com.example;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,21 +11,32 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class EmployeeRepositoryImplTest {
+    EmployeeRepositoryImpl employeeRepositoryImpl = new EmployeeRepositoryImpl();
 
     @ParameterizedTest(name = "should return all the employees stored in ArrayList<>")
     @MethodSource("findAllEmployees")
     @DisplayName("using interface method findAll to get all employees stored")
-    void findAllEmployeesTest(Employee employeeId, boolean boolResult) {
-        EmployeeRepositoryImpl employeeRepositoryImpl = new EmployeeRepositoryImpl();
+    void findAllEmployeesTest(String employeeId, boolean boolResult) {
 
         var employeeList = employeeRepositoryImpl.findAll();
         var idList = employeeList.stream()
-                .map((employeeID) -> employeeID.getId())
+                .map(Employee::getId)
                 .collect(Collectors.toList());
 
         assertThat(idList).contains(employeeId);
+    }
+
+    @BeforeEach
+    void getEmployeeRepository() {
+        employeeRepositoryImpl.employees.add(new Employee("Exec000", 2500.0));
+        employeeRepositoryImpl.employees.add(new Employee("Exec001", 3500.0));
+        employeeRepositoryImpl.employees.add(new Employee("Exec002", 4500.0));
+        employeeRepositoryImpl.employees.add(new Employee("Exec003", 5500.0));
+        employeeRepositoryImpl.employees.add(new Employee("Exec004", 6500.0));
+        employeeRepositoryImpl.employees.add(new Employee("Exec005", 7500.0));
     }
 
     private static Stream< Arguments > findAllEmployees() {
@@ -41,36 +53,23 @@ class EmployeeRepositoryImplTest {
 
     @Test
     @DisplayName("Test for save method which adds the ArrayList entry")
-    void saveEmployee()  {
-        EmployeeRepositoryImpl employeeRepositoryImpl = new EmployeeRepositoryImpl();
-
-        var  employee = employeeRepositoryImpl.save(new Employee("John123", 500.0));
-
+    void saveEmployee() {
+        var employee = employeeRepositoryImpl.save(new Employee("John123", 500.0));
         var employeeList = employeeRepositoryImpl.findAll();
-        var idList = employeeList.stream()
-                .filter(eID -> eID.getId().equals("John123"))
-                .map(employeeID -> employeeID.getId())
-                .collect(Collectors.toList());
 
-        assertThat(idList).containsExactly(new Employee("John123", 500.0).getId().toString());
+        assertThat(employeeList.get(6).getId()).contains(employee.getId());
 
     }
 
     @Test
     @DisplayName("Test for save method which overwrites the ArrayList entry")
-    void updateEmployee()  {
-        EmployeeRepositoryImpl employeeRepositoryImpl = new EmployeeRepositoryImpl();
+    void updateEmployee() {
 
-        var  employee = employeeRepositoryImpl.save(new Employee("John123", 500.0));
-        var  employeeUpdated = employeeRepositoryImpl.save(new Employee("John123", 1000.0));
-
+        var employee = employeeRepositoryImpl.save(new Employee("John123", 500.0));
+        var employeeUpdated = employeeRepositoryImpl.save(new Employee("John123", 1000.0));
         var employeeList = employeeRepositoryImpl.findAll();
-        var salaryList = employeeList.stream()
-                .filter(eID -> eID.getId().equals("John123"))
-                .map(employeeSalary -> employeeSalary.getSalary())
-                .collect(Collectors.toList());
 
-        assertThat(salaryList).containsExactly(new Employee("John123", 1000.0).getSalary());
+        assertEquals(employeeList.get(6).getSalary(), employeeUpdated.getSalary());
 
     }
 }

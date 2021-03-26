@@ -92,7 +92,7 @@ class EmployeeManagerTest {
 
     @Test
     @DisplayName("Changing status of employee being paid after payEmployee()")
-    void convert() {
+    void payEmployeesListTest() {
 
         EmployeeRepository employeeRepository = mock(EmployeeRepository.class);
         when(employeeRepository.findAll()).thenReturn(List.of(new Employee("Exec000", 2500.0),
