@@ -24,19 +24,18 @@ class EmployeeRepositoryImplTest {
                 .map((employeeID) -> employeeID.getId())
                 .collect(Collectors.toList());
 
-        assertThat(idList).contains(employeeId.getId());
+        assertThat(idList).contains(employeeId);
     }
 
     private static Stream< Arguments > findAllEmployees() {
         EmployeeRepositoryImpl employeeRepositoryImpl = new EmployeeRepositoryImpl();
         return Stream.of(
-                Arguments.of(employeeRepositoryImpl.employees.get(0), true),
-                Arguments.of(employeeRepositoryImpl.employees.get(1), true),
-                Arguments.of(employeeRepositoryImpl.employees.get(2), true),
-                Arguments.of(employeeRepositoryImpl.employees.get(3), true),
-                Arguments.of(employeeRepositoryImpl.employees.get(4), true),
-                Arguments.of(employeeRepositoryImpl.employees.get(5), true)
-
+                Arguments.of("Exec000", true),
+                Arguments.of("Exec001", true),
+                Arguments.of("Exec002", true),
+                Arguments.of("Exec003", true),
+                Arguments.of("Exec004", true),
+                Arguments.of("Exec005", true)
         );
     }
 
